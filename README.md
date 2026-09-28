@@ -112,7 +112,7 @@ pytest
 
 ## Règles de contribution
 
-**Une étape = une branche, et la pull request est obligatoire** (aucun push direct sur `main`).
+**Une étape = une branche (`<nom_git>/<etape>`), et la pull request est obligatoire** (aucun push direct sur `main`).
 Détails dans [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Intégration continue

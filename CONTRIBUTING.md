@@ -4,26 +4,27 @@ Ces règles s'appliquent à **toute personne qui touche au projet**.
 
 ## 1. Une étape = une branche
 
-Chaque étape du projet se fait sur **sa propre branche**, créée à partir de `main` à jour :
+Chaque étape du projet se fait sur **sa propre branche**, créée à partir de `main` à jour.
+Nommage : **`<nom_git>/<etape>`**, où `<nom_git>` est ton nom d'utilisateur GitHub et
+`<etape>` l'étape (ou le step) traitée, sans accents ni espaces :
 
 ```bash
 git checkout main
 git pull
-git checkout -b <type>/<etape>-<description-courte>
+git checkout -b <nom_git>/<etape>
 ```
 
-| Étape             | Exemple de nom de branche          |
-|-------------------|------------------------------------|
-| Explorer          | `feat/explorer-distribution-scores`|
-| Nettoyer          | `feat/nettoyer-suppression-doublons`|
-| Préparer          | `feat/preparer-split-stratifie`    |
-| Créer le modèle   | `feat/modele-tfidf-logreg`         |
-| Tester            | `feat/tester-metriques-f1`         |
-| Mettre en ligne   | `feat/api-endpoint-predict`        |
-| Surveiller        | `feat/surveiller-drift`            |
+| Étape             | Exemple de nom de branche |
+|-------------------|---------------------------|
+| Explorer          | `Irina-Igmm/explorer`     |
+| Nettoyer          | `Irina-Igmm/nettoyer`     |
+| Préparer          | `Irina-Igmm/preparer`     |
+| Créer le modèle   | `Irina-Igmm/modele`       |
+| Tester            | `Irina-Igmm/tester`       |
+| Mettre en ligne   | `Irina-Igmm/api`          |
+| Surveiller        | `Irina-Igmm/surveiller`   |
 
-Types : `feat/` (nouvelle fonctionnalité), `fix/` (correction), `docs/` (documentation),
-`chore/` (configuration, outillage), `test/` (tests uniquement).
+Pour un travail hors étapes (setup, CI, docs), utiliser un step explicite : `Irina-Igmm/ci`, `Irina-Igmm/docs`…
 
 ## 2. Pull request obligatoire
 
