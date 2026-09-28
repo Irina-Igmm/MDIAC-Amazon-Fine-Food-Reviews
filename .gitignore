@@ -1,0 +1,28 @@
+# Données (jamais sur GitHub)
+data/**
+!data/**/
+!data/**/.gitkeep
+*.csv
+*.parquet
+
+# Modèles lourds
+models/*
+!models/.gitkeep
+*.joblib
+*.pkl
+*.h5
+*.pt
+
+# Monitoring (logs générés)
+monitoring/logs/
+monitoring/reports/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
