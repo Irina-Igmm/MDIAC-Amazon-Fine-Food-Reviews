@@ -17,6 +17,10 @@ models/*
 monitoring/logs/
 monitoring/reports/
 
+# MLflow (runs locaux)
+mlruns/
+mlartifacts/
+
 # Python
 __pycache__/
 *.py[cod]

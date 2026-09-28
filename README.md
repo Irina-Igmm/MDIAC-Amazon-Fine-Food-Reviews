@@ -80,6 +80,7 @@ MDIAC-Amazon-Fine-Food-Reviews/
 │   ├── models/evaluate.py
 │   └── api/app.py
 ├── models/               # modèles entraînés (gitignored)
+├── mlruns/               # runs MLflow locaux (gitignored)
 ├── monitoring/
 ├── tests/
 ├── .github/workflows/ci.yml
@@ -108,6 +109,47 @@ uvicorn src.api.app:app --reload
 
 # 5. Tests
 pytest
+```
+
+## Suivi du cycle de vie : MLflow
+
+Toute l'équipe utilise [MLflow](https://mlflow.org/) pour **visualiser et gérer le cycle de vie** du modèle :
+
+| Besoin | Fonction MLflow |
+|---|---|
+| Comparer les essais (hyperparamètres, métriques) | **Tracking** : chaque entraînement = un *run* |
+| Visualiser les courbes et métriques | **UI MLflow** (tableaux, graphiques, comparaison de runs) |
+| Garder les artefacts (modèle, matrice de confusion…) | **Artifacts** attachés à chaque run |
+| Versionner le modèle et le faire passer en production | **Model Registry** (versions, alias `champion` / `challenger`) |
+
+### Lancer l'interface
+
+```bash
+mlflow ui --backend-store-uri ./mlruns
+# → http://127.0.0.1:5000
+```
+
+### Conventions d'équipe
+
+- **Expérience** : `amazon-fine-food-sentiment` (une seule, partagée par toute l'équipe).
+- **Nom du run** : `<nom_git>-<etape>-<description>`, par ex. `Irina-Igmm-modele-tfidf-bigrams`.
+- **À logger à chaque entraînement** : les hyperparamètres (`mlflow.log_params`), les métriques du
+  jeu de test (`accuracy`, `f1`, `precision`, `recall`) et le modèle (`mlflow.sklearn.log_model`).
+- **Model Registry** : modèle enregistré sous `sentiment-classifier` ; le meilleur porte l'alias
+  `champion`. L'API (`src/api/app.py`) doit servir la version `champion`.
+- Le dossier `mlruns/` est local et **gitignoré**. Pour partager les runs entre membres,
+  utiliser un serveur MLflow commun (`mlflow server`), puis définir `MLFLOW_TRACKING_URI`.
+
+Exemple minimal :
+
+```python
+import mlflow
+
+mlflow.set_experiment("amazon-fine-food-sentiment")
+with mlflow.start_run(run_name="Irina-Igmm-modele-tfidf-bigrams"):
+    mlflow.log_params({"ngram_range": "(1, 2)", "C": 1.0})
+    mlflow.log_metrics({"accuracy": acc, "f1": f1})
+    mlflow.sklearn.log_model(model, "model", registered_model_name="sentiment-classifier")
 ```
 
 ## Règles de contribution
